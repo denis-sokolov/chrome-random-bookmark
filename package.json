@@ -1,0 +1,13 @@
+{
+  "name": "random-bookmark",
+  "description": "An extension for Google Chrome to open a random bookmark.",
+  "scripts": {
+    "format": "prettier --write 'src/**/*.js'",
+    "pack": "rm -rf dist && mkdir dist && cp -r _locales manifest.json src dist/"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "eslint": "^6.6.0",
+    "prettier": "^1.19.1"
+  }
+}

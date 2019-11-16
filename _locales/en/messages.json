@@ -1,0 +1,11 @@
+{
+  "extension_name": {
+    "message": "Random bookmark by Denis"
+  },
+  "extension_short_name": {
+    "message": "Random bookmark"
+  },
+  "extension_description": {
+    "message": "Minimal way to open a random bookmark"
+  }
+}
