@@ -66,8 +66,6 @@
   const folderTitle = params.get("folderTitle");
   if (folderTitle) {
     const bookmarks = await api.allDescendantsOfTitle(folderTitle);
-    console.log("bookmarks", bookmarks);
-    return;
     const bookmark = random(
       bookmarks
         .filter(b => b.url)
