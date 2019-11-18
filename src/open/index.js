@@ -8,8 +8,16 @@
         .flat();
     const getSubTree = promisify(chrome.bookmarks.getSubTree);
     const getTree = promisify(chrome.bookmarks.getTree);
+    const search = promisify(chrome.bookmarks.search);
     return {
-      allDescendantsOfId: async folderId => flatten(await getSubTree(folderId)),
+      allDescendantsOfTitle: async folderTitle => {
+        // Search returns items without children
+        const folders = await search({ title: folderTitle });
+        const subtrees = (
+          await Promise.all(folders.map(f => getSubTree(f.id)))
+        ).flat();
+        return flatten(subtrees);
+      },
       getFullTree: async function() {
         const bookmarks = await getTree();
         // Chrome returns an empty top-level entry
@@ -39,8 +47,9 @@
         .map(function(b) {
           return (
             "<li>" +
-            "<a href='?folderId=" +
-            encode(encodeURIComponent(b.id)) +
+            "<a href='?folderTitle=" +
+            // Folder ids are not stable across Chrome bookmark sync
+            encode(encodeURIComponent(b.title)) +
             "'>" +
             encode(b.title) +
             "</a>" +
@@ -54,9 +63,11 @@
   }
 
   const params = new URLSearchParams(window.location.search);
-  const folderId = params.get("folderId");
-  if (folderId) {
-    const bookmarks = await api.allDescendantsOfId(folderId);
+  const folderTitle = params.get("folderTitle");
+  if (folderTitle) {
+    const bookmarks = await api.allDescendantsOfTitle(folderTitle);
+    console.log("bookmarks", bookmarks);
+    return;
     const bookmark = random(
       bookmarks
         .filter(b => b.url)
