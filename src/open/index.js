@@ -79,8 +79,11 @@
           b => !b.url.includes(chrome.runtime.getURL("src/open/index.html"))
         )
     );
-    if (!bookmark) throw new Error("No bookmarks in this folder");
-    window.location.href = bookmark.url;
+    if (bookmark) {
+      window.location.href = bookmark.url;
+    } else {
+      addHtml(`<p>No bookmarks with title ${folderTitle} found.</p>`);
+    }
   } else {
     addHtml(treeHtml(await api.getFullTree()));
   }
