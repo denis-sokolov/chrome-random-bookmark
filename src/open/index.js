@@ -36,6 +36,12 @@
       .replace(/"/g, "&quot;");
   const random = list => list[Math.floor(Math.random() * list.length)];
 
+  function addHtml(html) {
+    const div = document.createElement("div");
+    div.innerHTML = html;
+    document.body.appendChild(div);
+  }
+
   function treeHtml(bookmarks) {
     bookmarks = bookmarks.filter(
       b => !b.url || (b.children && b.children.length)
@@ -76,8 +82,6 @@
     if (!bookmark) throw new Error("No bookmarks in this folder");
     window.location.href = bookmark.url;
   } else {
-    const div = document.createElement("div");
-    div.innerHTML = treeHtml(await api.getFullTree());
-    document.body.appendChild(div);
+    addHtml(treeHtml(await api.getFullTree()));
   }
 })();
