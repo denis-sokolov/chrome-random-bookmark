@@ -1,5 +1,5 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "__MSG_extension_name__",
   "short_name": "__MSG_extension_short_name__",
   "version": "1.0.3",
@@ -15,6 +15,5 @@
 
   "incognito": "split",
   "options_page": "src/options/index.html",
-  "permissions": ["bookmarks"],
-  "web_accessible_resources": ["index.html"]
+  "permissions": ["bookmarks"]
 }
